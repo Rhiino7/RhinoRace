@@ -53,7 +53,10 @@ public class Nivel implements Runnable{
 //                velMatriz--;
 //        }
         
-        
+        tileMap(10);
+    }
+    
+    public void tileMap(int n){
         for(int i = 0;i<mapa.length;i++){
             for(int j=0;j<mapa[i].length;j++){
                 switch(mapa[i][j]){
@@ -63,6 +66,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 1:
@@ -71,6 +75,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 2:
@@ -79,6 +84,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 3:
@@ -87,6 +93,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 4:
@@ -95,6 +102,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 5:
@@ -103,6 +111,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 6:
@@ -111,6 +120,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 7:
@@ -119,6 +129,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 8:
@@ -127,6 +138,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     case 9:
@@ -135,6 +147,7 @@ public class Nivel implements Runnable{
                             this.g.drawImage(tile, j*32, i*32, io);
                         }else{
                             this.g.drawImage(tile, j*32, i*32-moverY, io);
+                            this.g.drawImage(tile, j*32, -i*32-moverY, io);
                         }
                         break;
                     default:
@@ -145,6 +158,17 @@ public class Nivel implements Runnable{
             }
             System.out.println("");
         }
+    }
+    
+    
+    public int[][] rotarMatriz(int[][] matriz){
+        int[][] mat = matriz;
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                matriz[i][j] = mat[matriz.length-i-1][j];
+            }
+        }
+        return mat;
     }
 
     @Override

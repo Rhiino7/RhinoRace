@@ -11,13 +11,13 @@ import javax.swing.JFrame;
  *
  * @author rhino
  */
-public class Ventana extends JFrame{
-
+public class Ventana extends JFrame {
+    
     public Ventana() {
         initUI();
     }
-        
-    public void initUI(){
+    
+    public void initUI() {
         add(new Engine());
         setSize(650, 679);
         setTitle("RhinoRace");
