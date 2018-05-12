@@ -33,7 +33,7 @@ public class MapsFiles implements Archivo{
     //Carga el mapa
     @Override
     public int[][] cargar(String path) {
-        int matriz[][] = new int[20][20];
+        int matriz[][] = new int[84][20];
         File map = new File(path);
             
         try {

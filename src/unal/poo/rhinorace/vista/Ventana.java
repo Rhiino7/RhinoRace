@@ -19,8 +19,9 @@ public class Ventana extends JFrame{
         
     public void initUI(){
         add(new Engine());
-        setSize(330, 330);
+        setSize(650, 679);
         setTitle("RhinoRace");
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }

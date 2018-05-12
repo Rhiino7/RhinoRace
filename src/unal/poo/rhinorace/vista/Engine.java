@@ -11,29 +11,39 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.image.ImageObserver;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import unal.poo.rhinorace.modelo.Archivo;
 import unal.poo.rhinorace.modelo.InputManager;
 import unal.poo.rhinorace.modelo.MapsFiles;
+import unal.poo.rhinorace.vista.entities.Player;
+import unal.poo.rhinorace.vista.maps.Nivel;
 
 /**
  *
  * @author rhino
  */
 public class Engine extends JPanel implements ActionListener{
+    private int width = 650;
+    private int height = 679;
     private Timer timer;
     private int[][] mapa;
     private int moverX = 0;
     private int moverY = 0;
     private Archivo archivo;
-    private Image tile;
-    
+    private Image jugador;
+    private Nivel n1;
+    private String nivel;
+    private Player p1;
+    private int colorCarro;
+    private InputManager input;
+    private double velMatriz = 0.0;
+    private boolean startGame = false;
 
     public Engine() {
-        //Cargando el mapa
+        //Usado para cargar imagenes
         archivo = new MapsFiles();
-        mapa = archivo.cargar("src\\unal\\poo\\rhinorace\\vista\\maps\\mapa_1.txt");
         
         //Agregar el KeyListener
         add(new InputManager(this));
@@ -42,43 +52,24 @@ public class Engine extends JPanel implements ActionListener{
         this.timer = new Timer(25, this);
         
         setFocusable(true);
-        
         timer.start(); //Inicia el timer para refrescar el JFrame
+        
     }
     
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         
-        for(int i = 0;i<mapa.length;i++){
-            for(int j=0;j<mapa[i].length;j++){
-                switch(mapa[i][j]){
-                    case 0:
-                        tile = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\maps\\Nivel 1\\road"+mapa[i][j]+".png");
-                        g.drawImage(tile, j*32+this.moverX, i*32+this.moverY, this);
-//                        g.fillRect(j*32+this.moverX, i*32+this.moverY, 32, 32);
-                        break;
-                    case 1:
-                        tile = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\maps\\Nivel 1\\road"+mapa[i][j]+".png");
-                        g.drawImage(tile, j*32+this.moverX, i*32+this.moverY, this);
-//                        g.fillRect(j*32+this.moverX, i*32+this.moverY, 32, 32);
-                        break;
-                    case 2:
-                        tile = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\maps\\Nivel 1\\road"+mapa[i][j]+".png");
-                        g.drawImage(tile, j*32+this.moverX, i*32+this.moverY, this);
-//                        g.fillRect(j*32+this.moverX, i*32+this.moverY, 32, 32);
-                        break;
-                    case 3:
-                        g.setColor(Color.WHITE);
-                        g.fillRect(j*32+this.moverX, i*32+this.moverY, 32, 32);
-                        break;
-                }
-            }
-            System.out.println("");
-        }
-        g.setColor(Color.BLUE);
-        g.fillOval(270, 500, 29, 29);
+        this.input.move();
+        this.nivel = "Nivel 1";
+        n1 = new Nivel(this, nivel, g, this.moverX, this.moverY, this);            
+        n1.run();
+        
+        this.colorCarro = 1;
+        p1 = new Player(this, g, this.colorCarro, 280, this.moverX, this.moverY);
+        p1.run();
+        
     }
-
+    
     public int getMoverX() {
         return moverX;
     }
@@ -94,6 +85,49 @@ public class Engine extends JPanel implements ActionListener{
     public void setMoverY(int moverY) {
         this.moverY = moverY;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Player getP1() {
+        return p1;
+    }
+
+    public void setP1(Player p1) {
+        this.p1 = p1;
+    }
+
+    public boolean isStartGame() {
+        return startGame;
+    }
+
+    public void setStartGame(boolean startGame) {
+        this.startGame = startGame;
+    }
+
+    public double getVelMatriz() {
+        return velMatriz;
+    }
+
+    public void setVelMatriz(double velMatriz) {
+        this.velMatriz = velMatriz;
+    }
+    
+    
+    
         
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -101,6 +135,7 @@ public class Engine extends JPanel implements ActionListener{
     }
 
     private void add(InputManager inputManager) {
+        input = inputManager;
         addKeyListener(inputManager);
     }
     
