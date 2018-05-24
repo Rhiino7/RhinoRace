@@ -12,54 +12,47 @@ import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
 import unal.poo.rhinorace.modelo.Archivo;
 
-
 /**
  *
  * @author rhino
  */
-public class Player implements Runnable{
-    
+public class Enemy implements Runnable{
     private Archivo archivo;
-    private Image jugador;
+    private Image enemigo;
     private ImageObserver io;
     private Graphics g;
-    private int color;
     private double posX;
-    private double posY = 40;
+    private double posY;
     private double velX;
     private double velY;
     private Rectangle carBox;
 
-    public Player(ImageObserver io, Graphics g, int color, int posX, int velX, int velY) {
+    public Enemy(ImageObserver io, Graphics g, int posX, int posY, int velY) {
         this.archivo = new MapsFiles();
         this.io = io;
         this.g = g;
-        this.color = color;
         this.posX = posX;
+        this.posY = posY;
         this.velX = velX;
         this.velY = velY;
         
     }
     
-    public void colision(){
-        
-    }
-    
-        
     public void render(){
-        jugador = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\entities\\PlayerCar\\Player_"+ this.color +".png");
-        this.posX +=this.velX;
-        this.carBox = new Rectangle(295+(int)this.velX, (int)this.posY, 32, 64);
-        g.drawImage(jugador, (int)this.posX, (int)this.posY, io);
-        g.drawRect(295+(int)this.velX, (int)this.posY, 32, 64);
-//        System.out.println("Y= "+this.posY+" X= "+this.posX);
+        enemigo = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\entities\\PlayerCar\\Player_"+ 1 +".png");
+        this.carBox = new Rectangle((int)this.posX, (int)this.posY-(int)this.velY, 30, 60);
+        g.drawImage(enemigo, (int)this.posX, (int)this.posY-(int)this.velY, io);
+        g.drawRect((int)this.posX+15, (int)this.posY-(int)this.velY, 32, 64);
+        System.out.println("Y= "+this.posY+" X= "+this.posX);
         
     }
-    
 
-    @Override
-    public void run() {
-        this.render();
+    public Rectangle getCarBox() {
+        return carBox;
+    }
+
+    public void setCarBox(Rectangle carBox) {
+        this.carBox = carBox;
     }
 
     public double getPosX() {
@@ -78,14 +71,27 @@ public class Player implements Runnable{
         this.posY = posY;
     }
 
-    public Rectangle getCarBox() {
-        return carBox;
+    public double getVelX() {
+        return velX;
     }
 
-    public void setCarBox(Rectangle carBox) {
-        this.carBox = carBox;
+    public void setVelX(double velX) {
+        this.velX = velX;
+    }
+
+    public double getVelY() {
+        return velY;
+    }
+
+    public void setVelY(double velY) {
+        this.velY = velY;
     }
     
     
     
+
+    @Override
+    public void run() {
+        render();
+    }
 }

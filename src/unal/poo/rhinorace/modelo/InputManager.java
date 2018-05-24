@@ -94,30 +94,39 @@ public class InputManager implements KeyListener{
         }
         
         if(diagonalTopLeft){
-            if(juego.getP1().getPosX() >= 165 || juego.getP1().getPosY() >= 5){
-                juego.setMoverX(juego.getMoverX()-5);
-                juego.setMoverY(juego.getMoverY()-5);
+            if(juego.getP1().getPosX() >= 165){
+                if(juego.getP1().getPosY() >= 5){
+                    juego.setMoverX(juego.getMoverX()-5);
+                    juego.setMoverY(juego.getMoverY()+5);
+                }
             }
+                
         }
         
         if(diagonalTopRight){
-            if(juego.getP1().getPosX() <= 410 || juego.getP1().getPosY() >= 5){
-                juego.setMoverX(juego.getMoverX()+5);
-                juego.setMoverY(juego.getMoverY()-5);
+            if(juego.getP1().getPosX() <= 410){
+                if(juego.getP1().getPosY() >= 5){
+                    juego.setMoverX(juego.getMoverX()+5);
+                    juego.setMoverY(juego.getMoverY()+5);
+                }
             }
         }
         
         if(diagonalBotLeft){
-            if(juego.getP1().getPosX() >= 165 || juego.getP1().getPosY() <=570){
-                juego.setMoverX(juego.getMoverX()-5);
-                juego.setMoverY(juego.getMoverY()+5);
-            }
+            if(juego.getP1().getPosX() >= 165){
+                if(juego.getP1().getPosY() <=570){
+                    juego.setMoverX(juego.getMoverX()-5);
+                    juego.setMoverY(juego.getMoverY()-5);
+                }
+            }   
         }
         
         if(diagonalBotRight){
-            if(juego.getP1().getPosX() <= 410 || juego.getP1().getPosY() <=570){
-                juego.setMoverX(juego.getMoverX()+5);
-                juego.setMoverY(juego.getMoverY()+5);
+            if(juego.getP1().getPosX() <= 410){
+                if(juego.getP1().getPosY() <=570){
+                    juego.setMoverX(juego.getMoverX()+5);
+                    juego.setMoverY(juego.getMoverY()-5);
+                }
             }
         }
         
@@ -129,11 +138,11 @@ public class InputManager implements KeyListener{
                 juego.setMoverX(juego.getMoverX()+5);
         }else if(isSpressed){
             if(juego.getP1().getPosY() <=570){
-                juego.setMoverY(juego.getMoverY()+5);
+                juego.setMoverY(juego.getMoverY()-5);
             }
         }else if (isWpressed){
             if(juego.getP1().getPosY() >= 5){
-                juego.setMoverY(juego.getMoverY()-5);
+                juego.setMoverY(juego.getMoverY()+5);
             }
         }
     }
