@@ -84,7 +84,7 @@ public class Engine extends JPanel implements ActionListener{
         }
         
         if(enemigos == null){
-            int n = 20;
+            int n = 200;
             crearEnemigos(g, n);
         }else{
             dibujarEnemigos(g);
