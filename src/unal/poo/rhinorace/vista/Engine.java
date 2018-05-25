@@ -16,11 +16,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.image.ImageObserver;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import unal.poo.rhinorace.modelo.Archivo;
 import unal.poo.rhinorace.modelo.InputManager;
 import unal.poo.rhinorace.modelo.MapsFiles;
+import unal.poo.rhinorace.modelo.SonidoColision;
 import unal.poo.rhinorace.vista.entities.Enemy;
 import unal.poo.rhinorace.vista.entities.Player;
 import unal.poo.rhinorace.vista.maps.Nivel;
@@ -47,6 +50,7 @@ public class Engine extends JPanel implements ActionListener{
     private boolean playerAlive = true;
     private Random r;
     private Enemy[] enemigos;
+    private boolean colision = false ;
 
     public Engine() {
         //Usado para cargar imagenes
@@ -91,6 +95,14 @@ public class Engine extends JPanel implements ActionListener{
 
         
     }
+    
+    // Movimiento automatico enemigos
+     public void move() {
+       for(int i= 0; i < 5 ; i++  ){
+           moverY++;             
+       }
+    }
+
     
     public void crearEnemigos(Graphics g, int n){
         this.enemigos = new Enemy[n];
@@ -149,10 +161,14 @@ public class Engine extends JPanel implements ActionListener{
                 if(cajaJugador.intersects(enemys[i])){
                     System.out.println("PERRRROOOOOOOO");
                     this.playerAlive = false;
+                    colision= true;
+                    Thread sonido = new Thread(new SonidoColision());
+                     sonido.start();
                 }
             }catch(NullPointerException e){
             }
-        }
+        }     
+        
     }
     
     public int getMoverX() {
@@ -222,7 +238,12 @@ public class Engine extends JPanel implements ActionListener{
         
     @Override
     public void actionPerformed(ActionEvent e) {
-        repaint();
+        // al colisionar detiene el movimiento
+        
+        if(colision==false)
+          move(); 
+      repaint();
+        
     }
 
     private void add(InputManager inputManager) {
