@@ -33,9 +33,8 @@ public class MapsFiles implements Archivo{
     //Carga el mapa
     @Override
     public int[][] cargar(String path) {
-        int matriz[][] = new int[84][20];
+        int matriz[][] = new int[399][20];
         File map = new File(path);
-            
         try {
             Scanner lectura = new Scanner(map);
             if(map.exists()){

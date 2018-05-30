@@ -40,11 +40,7 @@ public class Player implements Runnable{
         this.velY = velY;
         
     }
-    
-    public void colision(){
         
-    }
-    
         
     public void render(){
         jugador = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\entities\\PlayerCar\\Player_"+ this.color +".png");
@@ -53,7 +49,6 @@ public class Player implements Runnable{
         g.drawImage(jugador, (int)this.posX, (int)this.posY, io);
         g.drawRect(295+(int)this.velX, (int)this.posY, 32, 64);
 //        System.out.println("Y= "+this.posY+" X= "+this.posX);
-        
     }
     
 

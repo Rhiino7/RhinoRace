@@ -5,6 +5,10 @@
  */
 package unal.poo.rhinorace.vista;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Dimension;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -18,7 +22,11 @@ public class Ventana extends JFrame {
     }
     
     public void initUI() {
-        add(new Engine());
+        
+        setLayout(new BorderLayout());    
+        
+        add(new Button("Hola amigos"), BorderLayout.NORTH);
+        add(new Engine(),BorderLayout.CENTER);
         setSize(650, 679);
         setTitle("RhinoRace");
         setLocationRelativeTo(null);

@@ -25,19 +25,21 @@ public class Nivel implements Runnable{
     private Image tile;
     private int moverX;
     private int moverY;
+    private int numeroNivel;
     private String nivel;
     private Graphics g;
     private ImageObserver io;
     private Engine juego;
 
-    public Nivel(Engine juego, String nivel,Graphics g, int x, int y, ImageObserver io) {
+    public Nivel(Engine juego, String nivel,Graphics g, int x, int y, int numeroNivel, ImageObserver io) {
         this.juego = juego;
         //cargar el mapa
         archivo = new MapsFiles();
-        mapa = archivo.cargar("src\\unal\\poo\\rhinorace\\vista\\maps\\mapa_1.txt");
+        mapa = archivo.cargar("src\\unal\\poo\\rhinorace\\vista\\maps\\mapa_"+numeroNivel+".txt");
         this.moverX = x;
         this.moverY = y;
         this.nivel = nivel;
+        this.numeroNivel = numeroNivel;
         this.g = g;
         this.io = io;
     }

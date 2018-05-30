@@ -72,13 +72,15 @@ public class Engine extends JPanel implements ActionListener{
         
         
                 
-        this.nivel = "Nivel 1";
-        n1 = new Nivel(this, nivel, g, this.moverX, this.moverY, this);            
+        this.nivel = "Nivel 3";
+        int numeroNivel = chooseLevel(nivel);
+        n1 = new Nivel(this, nivel, g, this.moverX, this.moverY, numeroNivel, this);            
         n1.run();
         
         this.colorCarro = 1;
         if(playerAlive){
-            this.input.move();
+            Thread control = new Thread(input);
+            control.start();
             p1 = new Player(this, g, this.colorCarro, 280, this.moverX, this.moverY);
             p1.run();
         }
@@ -90,8 +92,8 @@ public class Engine extends JPanel implements ActionListener{
             dibujarEnemigos(g);
         }
             
-        
-        colission();
+        if(playerAlive)
+            colission();
 
         
     }
@@ -99,7 +101,8 @@ public class Engine extends JPanel implements ActionListener{
     // Movimiento automatico enemigos
      public void move() {
        for(int i= 0; i < 5 ; i++  ){
-           moverY++;             
+           if(startGame)
+                moverY++;             
        }
     }
 
@@ -108,14 +111,14 @@ public class Engine extends JPanel implements ActionListener{
         this.enemigos = new Enemy[n];
         int cambio = 100;
         this.velY = -this.moverY;
-        int posY = 300;
+        int posY = 500;
         r = new Random();
         for(int i=0;i<enemigos.length;i++){
             int caso = r.nextInt(3);
             switch(caso){
                 case 0:{
                     if(i!= 0){
-                        posY += 150;
+                        posY += 300;
                         this.enemigos[i] = new Enemy(this, g, 280-cambio, posY, this.velY);
                     }else{
                         this.enemigos[i] = new Enemy(this, g, 280-cambio, posY, velY);
@@ -124,7 +127,7 @@ public class Engine extends JPanel implements ActionListener{
                 }
                 case 1:{
                     if(i!= 0){
-                        posY += 150; 
+                        posY += 300; 
                         this.enemigos[i] = new Enemy(this, g, 280, posY, this.velY);
                     }else{
                         this.enemigos[i] = new Enemy(this, g, 280, posY, this.velY);
@@ -133,7 +136,7 @@ public class Engine extends JPanel implements ActionListener{
                 }
                 case 2:{
                     if(i!= 0){
-                        posY += 150; 
+                        posY += 300; 
                         this.enemigos[i] = new Enemy(this, g, 280+cambio, posY, this.velY);
                     }else{
                         this.enemigos[i] = new Enemy(this, g, 280+cambio, posY, this.velY);
@@ -163,7 +166,7 @@ public class Engine extends JPanel implements ActionListener{
                     this.playerAlive = false;
                     colision= true;
                     Thread sonido = new Thread(new SonidoColision());
-                     sonido.start();
+                    sonido.start();
                 }
             }catch(NullPointerException e){
             }
@@ -253,5 +256,15 @@ public class Engine extends JPanel implements ActionListener{
     
     public void escribir(){
         System.out.println("Funciona");
+    }
+    
+    public int chooseLevel(String level){
+        if(level.endsWith("1"))
+            return 1;
+        else if(level.endsWith("2"))
+            return 2;
+        else if(level.endsWith("3"))
+            return 3;
+        return 1;
     }
 }

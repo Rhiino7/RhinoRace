@@ -13,7 +13,7 @@ import unal.poo.rhinorace.vista.Engine;
  *
  * @author rhino
  */
-public class InputManager implements KeyListener{
+public class InputManager implements KeyListener, Runnable{
     
     private Engine juego;
     private int abc = 0;
@@ -145,5 +145,10 @@ public class InputManager implements KeyListener{
                 juego.setMoverY(juego.getMoverY()+5);
             }
         }
+    }
+
+    @Override
+    public void run() {
+        move();
     }
 }
