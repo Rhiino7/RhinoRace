@@ -25,6 +25,7 @@ import unal.poo.rhinorace.modelo.InputManager;
 import unal.poo.rhinorace.modelo.MapsFiles;
 import unal.poo.rhinorace.modelo.SonidoColision;
 import unal.poo.rhinorace.vista.entities.Enemy;
+import unal.poo.rhinorace.vista.entities.Objetos;
 import unal.poo.rhinorace.vista.entities.Player;
 import unal.poo.rhinorace.vista.maps.Nivel;
 
@@ -41,7 +42,8 @@ public class Engine extends JPanel implements ActionListener{
     private Archivo archivo;
     private Image jugador;
     private Nivel n1;
-    private String nivel;
+    private String nivel = "Nivel 3";
+    private int numeroNivel = chooseLevel(nivel);
     private Player p1;
     private Enemy e1;
     private InputManager input;
@@ -50,7 +52,8 @@ public class Engine extends JPanel implements ActionListener{
     private boolean playerAlive = true;
     private Random r;
     private Enemy[] enemigos;
-    private boolean colision = false ;
+    private Objetos[] objetos;
+    private boolean colision = false;
 
     public Engine() {
         //Usado para cargar imagenes
@@ -72,8 +75,7 @@ public class Engine extends JPanel implements ActionListener{
         
         
                 
-        this.nivel = "Nivel 3";
-        int numeroNivel = chooseLevel(nivel);
+        
         n1 = new Nivel(this, nivel, g, this.moverX, this.moverY, numeroNivel, this);            
         n1.run();
         
@@ -82,7 +84,9 @@ public class Engine extends JPanel implements ActionListener{
             Thread control = new Thread(input);
             control.start();
             p1 = new Player(this, g, this.colorCarro, 280, this.moverX, this.moverY);
-            p1.run();
+            Thread dibJugador = new Thread(p1);
+            dibJugador.start();
+//            p1.run();
         }
         
         if(enemigos == null){
@@ -91,7 +95,14 @@ public class Engine extends JPanel implements ActionListener{
         }else{
             dibujarEnemigos(g);
         }
-            
+        
+        if(objetos == null){
+            int n = 10;
+            crearObjetos(g, n);
+        }else{
+            dibujarObjetos(g);
+        }
+        
         if(playerAlive)
             colission();
 
@@ -112,34 +123,37 @@ public class Engine extends JPanel implements ActionListener{
         int cambio = 100;
         this.velY = -this.moverY;
         int posY = 500;
+        Random color = new Random();
+        int colorEnemigo;
         r = new Random();
         for(int i=0;i<enemigos.length;i++){
             int caso = r.nextInt(3);
+            colorEnemigo = color.nextInt(2);
             switch(caso){
                 case 0:{
                     if(i!= 0){
                         posY += 300;
-                        this.enemigos[i] = new Enemy(this, g, 280-cambio, posY, this.velY);
+                        this.enemigos[i] = new Enemy(this, g, 280-cambio, posY, this.velY, colorEnemigo);
                     }else{
-                        this.enemigos[i] = new Enemy(this, g, 280-cambio, posY, velY);
+                        this.enemigos[i] = new Enemy(this, g, 280-cambio, posY, velY, colorEnemigo);
                     }
                     break;
                 }
                 case 1:{
                     if(i!= 0){
                         posY += 300; 
-                        this.enemigos[i] = new Enemy(this, g, 280, posY, this.velY);
+                        this.enemigos[i] = new Enemy(this, g, 280, posY, this.velY, colorEnemigo);
                     }else{
-                        this.enemigos[i] = new Enemy(this, g, 280, posY, this.velY);
+                        this.enemigos[i] = new Enemy(this, g, 280, posY, this.velY, colorEnemigo);
                     }
                     break;
                 }
                 case 2:{
                     if(i!= 0){
                         posY += 300; 
-                        this.enemigos[i] = new Enemy(this, g, 280+cambio, posY, this.velY);
+                        this.enemigos[i] = new Enemy(this, g, 280+cambio, posY, this.velY, colorEnemigo);
                     }else{
-                        this.enemigos[i] = new Enemy(this, g, 280+cambio, posY, this.velY);
+                        this.enemigos[i] = new Enemy(this, g, 280+cambio, posY, this.velY, colorEnemigo);
                     }
                     break;
                 }
@@ -150,8 +164,10 @@ public class Engine extends JPanel implements ActionListener{
     public void dibujarEnemigos(Graphics g){
         for(int i=0;i<enemigos.length-1;i++){
             int velocidad = this.moverY;
-            this.enemigos[i] = new Enemy(this, g, (int)enemigos[i].getPosX(), (int)enemigos[i].getPosY(), velocidad);
-            enemigos[i].run();
+            this.enemigos[i] = new Enemy(this, g, (int)enemigos[i].getPosX(), (int)enemigos[i].getPosY(), velocidad, enemigos[i].getColorEnemigo());
+            Thread dibEnemigo = new Thread(enemigos[i]);
+            dibEnemigo.start();
+//            enemigos[i].run();
         }
     }
     
@@ -172,6 +188,56 @@ public class Engine extends JPanel implements ActionListener{
             }
         }     
         
+    }
+    
+    public void crearObjetos(Graphics g, int n){
+        this.objetos = new Objetos[n];
+        int cambio = 100;
+        this.velY = -this.moverY;
+        int posY = 500;
+        r = new Random();
+        for(int i=0;i<objetos.length;i++){
+            int caso = r.nextInt(3);
+            switch(caso){
+                case 0:{
+                    if(i!= 0){
+                        posY += 300;
+                        this.objetos[i] = new Objetos(this, g, 280-cambio, posY, this.velY, numeroNivel);
+                    }else{
+                        this.objetos[i] = new Objetos(this, g, 280-cambio, posY, velY, numeroNivel);
+                    }
+                    break;
+                }
+                case 1:{
+                    if(i!= 0){
+                        posY += 300; 
+                        this.objetos[i] = new Objetos(this, g, 280, posY, this.velY, numeroNivel);
+                    }else{
+                        this.objetos[i] = new Objetos(this, g, 280, posY, this.velY, numeroNivel);
+                    }
+                    break;
+                }
+                case 2:{
+                    if(i!= 0){
+                        posY += 300; 
+                        this.objetos[i] = new Objetos(this, g, 280+cambio, posY, this.velY, numeroNivel);
+                    }else{
+                        this.objetos[i] = new Objetos(this, g, 280+cambio, posY, this.velY, numeroNivel);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    
+    public void dibujarObjetos(Graphics g){
+        for(int i=0;i<objetos.length-1;i++){
+            int velocidad = this.moverY;
+            this.objetos[i] = new Objetos(this, g, (int)objetos[i].getPosX(), (int)objetos[i].getPosY(), velocidad, objetos[i].getNivel());
+            Thread dibObjetos = new Thread(objetos[i]);
+            dibObjetos.start();
+//            objetos[i].run();
+        }
     }
     
     public int getMoverX() {

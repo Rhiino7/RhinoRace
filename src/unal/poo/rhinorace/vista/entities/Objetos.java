@@ -16,19 +16,16 @@ import unal.poo.rhinorace.modelo.Archivo;
  *
  * @author rhino
  */
-public class Enemy implements Runnable{
+public class Objetos implements Runnable{
     private Archivo archivo;
-    private Image enemigo;
+    private Image dibujo;
     private ImageObserver io;
     private Graphics g;
-    private double posX;
-    private double posY;
-    private double velX;
-    private double velY;
-    private Rectangle carBox;
-    private int colorEnemigo;
+    private double posX, posY, velX, velY;
+    private Rectangle objBox;
+    private int nivel;
 
-    public Enemy(ImageObserver io, Graphics g, int posX, int posY, int velY, int colorEnemigo) {
+    public Objetos(ImageObserver io, Graphics g, int posX, int posY, int velY, int nivel) {
         this.archivo = new MapsFiles();
         this.io = io;
         this.g = g;
@@ -36,25 +33,24 @@ public class Enemy implements Runnable{
         this.posY = posY;
         this.velX = velX;
         this.velY = velY;
-        this.colorEnemigo = colorEnemigo;
-        
+        this.nivel = nivel;
     }
     
     public void render(){
-        enemigo = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\entities\\Enemys\\e_"+ this.colorEnemigo +".png");
-        this.carBox = new Rectangle((int)this.posX, (int)this.posY-(int)this.velY, 30, 60);
-        g.drawImage(enemigo, (int)this.posX+10, (int)this.posY-(int)this.velY, io);
-        g.drawRect((int)this.posX+15, (int)this.posY-(int)this.velY, 32, 64);
+        dibujo = archivo.loadImage("src\\unal\\poo\\rhinorace\\vista\\objetos\\obj_"+ nivel +".png");
+        this.objBox = new Rectangle((int)this.posX, (int)this.posY-(int)this.velY, 24, 24);
+        g.drawImage(dibujo, (int)this.posX+10, (int)this.posY-(int)this.velY, io);
+        g.drawRect((int)this.posX+15, (int)this.posY-(int)this.velY, 24, 24);
 //        System.out.println("Y= "+this.posY+" X= "+this.posX);
         
     }
 
-    public Rectangle getCarBox() {
-        return carBox;
+    public Image getDibujo() {
+        return dibujo;
     }
 
-    public void setCarBox(Rectangle carBox) {
-        this.carBox = carBox;
+    public void setDibujo(Image dibujo) {
+        this.dibujo = dibujo;
     }
 
     public double getPosX() {
@@ -89,12 +85,20 @@ public class Enemy implements Runnable{
         this.velY = velY;
     }
 
-    public int getColorEnemigo() {
-        return colorEnemigo;
+    public Rectangle getObjBox() {
+        return objBox;
     }
 
-    public void setColorEnemigo(int colorEnemigo) {
-        this.colorEnemigo = colorEnemigo;
+    public void setObjBox(Rectangle objBox) {
+        this.objBox = objBox;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
     
     
@@ -104,4 +108,5 @@ public class Enemy implements Runnable{
     public void run() {
         render();
     }
+    
 }
