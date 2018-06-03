@@ -111,7 +111,7 @@ public class Engine extends JPanel implements ActionListener{
     
     // Movimiento automatico enemigos
      public void move() {
-       for(int i= 0; i < 5 ; i++  ){
+       for(int i= 0; i < 15 ; i++  ){
            if(startGame)
                 moverY++;             
        }
