@@ -25,9 +25,8 @@ public class Ventana extends JFrame {
         
         setLayout(new BorderLayout());    
         
-        add(new Button("Hola amigos"), BorderLayout.NORTH);
         add(new Engine(),BorderLayout.CENTER);
-        setSize(650, 679);
+        setSize(850, 679);
         setTitle("RhinoRace");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
